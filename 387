@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        int alphabet[26] = {0};
+        for (int i = 0; i < s.size(); ++i){++alphabet[s[i] -'a'];}
+        int i = 0;
+        while (i < s.size() && alphabet[s[i]-'a'] > 1) ++i;
+        return i == s.size() ? -1 : i;
+    }
+};
