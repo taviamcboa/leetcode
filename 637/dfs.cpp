@@ -12,7 +12,8 @@ public:
     vector<double> averageOfLevels(TreeNode* root) {
         
         //dfs 
-        vector<int> levelSum; 
+        // in case of overflow
+        vector<long> levelSum; 
         
         vector<int> levelCount; 
         
@@ -36,7 +37,7 @@ public:
     }
     
 private: 
-    void dfs(TreeNode* node, int level, vector<int>& levelSum, vector<int>& levelCount){
+    void dfs(TreeNode* node, int level, vector<long>& levelSum, vector<int>& levelCount){
         if(!node){
             return; 
         }

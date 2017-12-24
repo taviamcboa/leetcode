@@ -10,55 +10,38 @@
 class Solution {
 public:
     vector<double> averageOfLevels(TreeNode* root) {
+        vector<double> res; 
+
+        queue<TreeNode*> bfs;
+        bfs.push(root);
         
-        //bfs 
-        vector<double> avgArray; 
-        
-        queue<pair<TreeNode*, int>> bfs;
-        int currentLevelSum = 0; 
-        int currentLevelCount = 0; 
-        int previousLevel = -1;
-        
-        if(root){
-            bfs.push(make_pair(root, 0)); 
-        }else{
-            return avgArray;
+        while(bfs.empty() == false){
+            long sum = 0; 
+            // num of tree nodes in current level
+            int s = bfs.size();
+            for(int i = 0; i < s; i++) 
+            {
+             
+                TreeNode* current = bfs.front(); 
+                bfs.pop(); 
+
+                if(current->left) 
+                    bfs.push(current->left);
+                if(current->right) 
+                    bfs.push(current->right);
+                
+                sum += current->val; 
+                
+            }
+
+            // push next level nodes
+            
+            res.push_back((double)sum / s);
+            
+            
         }
         
-        while(bfs.empty() ==false){
-            pair<TreeNode*, int> tmp = bfs.front(); 
-            bfs.pop();
-            const TreeNode* currentNode = tmp.first; 
-            const int currentLevel = tmp.second; 
-            
-            if(currentLevel != previousLevel){
-                if(previousLevel != -1){
-                    double avg = (double)currentLevelSum / currentLevelCount;
-                    avgArray.push_back(avg);  
-                }
-                
-                // reset
-                currentLevelSum = 0; 
-                currentLevelCount = 0; 
-                previousLevel = currentLevel; 
-                
-            }  
-            
-            currentLevelSum += currentNode->val; 
-            currentLevelCount++; 
-            
-            if(currentNode->left){
-                bfs.push(make_pair(currentNode->left, currentLevel+1));
-            }
-            if(currentNode->right){
-                bfs.push(make_pair(currentNode->right, currentLevel+1));
-            }
-        }
-                         
-       if(previousLevel != -1){
-                    double avg = (double)currentLevelSum / currentLevelCount;
-                    avgArray.push_back(avg);  
-                }
-          return avgArray;               
+        return res; 
+                   
     }
 };
